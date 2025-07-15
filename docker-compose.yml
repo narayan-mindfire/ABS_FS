@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./Appointment_Booking_System_React
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./ABS_BACKEND
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./ABS_BACKEND/.env
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: narayan
+      MONGO_INITDB_ROOT_PASSWORD: mypass123
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
